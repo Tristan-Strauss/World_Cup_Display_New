@@ -16,7 +16,7 @@ player = VideoPlayer()
 def handle_valid_year(year, video_name):
     print(f"[+] Year accepted: {year}")
 
-    gpio.set_all_low()
+    gpio.set_all_high()
 
     # Start GPIO
     if gpio.check_if_year_local(year):
@@ -37,7 +37,7 @@ def handle_valid_year(year, video_name):
         pin = gpio.get_pin_from_slave_year_dict(year)
         slave.send(f"{pin}_Low")
 
-    gpio.set_all_high()
+    gpio.set_all_low()
 
 
 # --- Callback to update bottom 4-digit display ---
@@ -52,11 +52,16 @@ def on_volume_up():
 def on_volume_down():
     os.system("pactl set-sink-volume 0 -10%")
 
+# --- Calback to video stop (needs to control video and gpio) ---
+def on_video_stop():
+    player.stop_video()
+    gpio.set_all_low()
+
 # --- Start keyboard listener in background ---
 keyboard_listener = KeyboardListener(
     on_valid_year=handle_valid_year,
     on_update_display=handle_update_display,
-    on_stop_video=player.stop_video,
+    on_stop_video=on_video_stop,
     on_volume_up=on_volume_up,
     on_volume_down=on_volume_down
 )
