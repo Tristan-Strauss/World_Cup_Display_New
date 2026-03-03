@@ -1,0 +1,9 @@
+venv
+/venv
+.env
+__pycache__
+*.log
+.DS_Store
+.lgd-nfy0
+*.mp4
+.vscode
