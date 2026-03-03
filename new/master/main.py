@@ -19,6 +19,7 @@ def handle_valid_year(year, video_name):
 
     # Turn off all GPIO pins to reset state before playing video
     gpio.set_all_low()
+    slave.send("ALL_OFF")
 
     # Start GPIO (stopped by video stop callback)
     if gpio.check_if_year_local(year):
@@ -49,6 +50,7 @@ def on_video_stop():
     print("[DEBUG] Stopping video and resetting GPIO")
     player.stop_video()
     gpio.set_all_low()
+    slave.send("ALL_ON")
 
 # --- Start keyboard listener in background ---
 keyboard_listener = KeyboardListener(
