@@ -13,10 +13,10 @@ while True:
         command = ser.readline().decode().strip()
         print(f"\n[+] Received command from master: {command}")
         if (command.split("_")[1] == "High"):
-            pin = command.split("-")[0]
+            pin = command.split("_")[0]
             gpio.set_pin_high(pin=int(pin))
         elif (command.split("_")[1] == "Low"):
-            pin = command.split("-")[0]
+            pin = command.split("_")[0]
             gpio.set_pin_low(pin=int(pin))
         elif (command.split("_")[1] == "ON"):
             gpio.set_all_low()
