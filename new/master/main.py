@@ -4,6 +4,7 @@ from keyboardListener import KeyboardListener
 from console import SlaveController
 from gpio import GPIOController
 import os
+import time
 
 # --- Init hardware ---
 slave = SlaveController()
@@ -16,9 +17,10 @@ player = VideoPlayer()
 def handle_valid_year(year, video_name):
     print(f"[+] Year accepted: {year}")
 
-    gpio.set_all_high()
+    # Turn off all GPIO pins to reset state before playing video
+    gpio.set_all_low()
 
-    # Start GPIO
+    # Start GPIO (stopped by video stop callback)
     if gpio.check_if_year_local(year):
         pin = gpio.get_pin_from_master_year_dict(year)
         gpio.set_pin_high(pin)
@@ -28,16 +30,6 @@ def handle_valid_year(year, video_name):
 
     # Play Video
     player.play_by_name(video_name)
-
-    # Stop GPIO
-    if gpio.check_if_year_local(year):
-        pin = gpio.get_pin_from_master_year_dict(year)
-        gpio.set_pin_low(pin)
-    else:
-        pin = gpio.get_pin_from_slave_year_dict(year)
-        slave.send(f"{pin}_Low")
-
-    gpio.set_all_low()
 
 
 # --- Callback to update bottom 4-digit display ---
@@ -54,6 +46,7 @@ def on_volume_down():
 
 # --- Calback to video stop (needs to control video and gpio) ---
 def on_video_stop():
+    print("[DEBUG] Stopping video and resetting GPIO")
     player.stop_video()
     gpio.set_all_low()
 

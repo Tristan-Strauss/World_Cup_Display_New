@@ -146,7 +146,7 @@ class GPIOController:
         GPIO.output(37, GPIO.HIGH)
         GPIO.output(38, GPIO.HIGH)
         GPIO.output(40, GPIO.HIGH)
-        print("Set all GPIO pins high")
+        print("[-] Set all GPIO pins high")
 
     def set_all_low(self):
         GPIO.output(3, GPIO.LOW)
@@ -175,7 +175,7 @@ class GPIOController:
         GPIO.output(37, GPIO.LOW)
         GPIO.output(38, GPIO.LOW)
         GPIO.output(40, GPIO.LOW)
-        print("Set all GPIO pins low")
+        print("[-] Set all GPIO pins low")
 
     def set_pin_high(self, pin):
         GPIO.output(pin, GPIO.HIGH)
