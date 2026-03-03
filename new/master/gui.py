@@ -71,6 +71,9 @@ class VideoPlayer:
 
         # VERY IMPORTANT: force window creation so winfo_id() works
         self.root.update()
+
+        # Send back so background image shows
+        self.video_frame.lower()
     
     def _setup_year_display(self):
         self.year_var = tk.StringVar()
