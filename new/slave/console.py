@@ -14,10 +14,10 @@ while True:
         print(f"\n[+] Received command from master: {command}")
         if (command.split("_")[1] == "High"):
             pin = command.split("-")[0]
-            gpio.set_pin_high(pin=pin)
+            gpio.set_pin_high(pin=int(pin))
         elif (command.split("_")[1] == "Low"):
             pin = command.split("-")[0]
-            gpio.set_pin_low(pin=pin)
+            gpio.set_pin_low(pin=int(pin))
         elif (command.split("_")[1] == "ON"):
             gpio.set_all_low()
         elif (command.split("_")[1] == "OFF"):
