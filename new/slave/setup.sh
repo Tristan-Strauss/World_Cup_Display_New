@@ -16,6 +16,11 @@ echo "Setting up autostart for the World Cup Display - Slave"
 mkdir -p ~/.config/systemd/user
 cp ./world_cup_display.service ~/.config/systemd/user/
 
+systemctl --user daemon-reexec
+systemctl --user daemon-reload
+systemctl --user enable world_cup_display.service
+systemctl --user start world_cup_display.service
+
 echo "Setting up python environment"
 cd ../..
 python3 -m venv venv
