@@ -13,8 +13,8 @@ sudo systemctl enable tailscaled
 sudo tailscale up --authkey tskey-auth-kYSdVJXqsj11CNTRL-CpePqj27aL3smFuNLNHAL3n9eWUF5Mxab # This expires in 90 days, so you will need to generate a new one after that. You can do this in the Tailscale admin console.
 
 echo "Setting up autostart for the World Cup Display - Slave"
-mkdir -p ~/.config/autostart
-cp ./world_cup_display.desktop ~/.config/autostart/
+mkdir -p ~/.config/systemd/user
+cp ./world_cup_display.service ~/.config/systemd/user/
 
 echo "Setting up python environment"
 cd ../..

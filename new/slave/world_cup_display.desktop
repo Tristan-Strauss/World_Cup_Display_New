@@ -1,6 +1,0 @@
-# put this in ~/.config/autostart
-
-[Desktop Entry]
-Type=Application
-Name=World Cup Display
-Exec=/home/pi/World_Cup_Display/venv/bin/python3 /home/pi/World_Cup_Display/new/slave/console.py

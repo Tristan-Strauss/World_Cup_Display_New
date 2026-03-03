@@ -1,0 +1,11 @@
+# put this in ~/.config/systemd/user
+
+[Unit]
+Description=World Cup Display Slave Service
+
+[Service]
+ExecStart=/home/pi/World_Cup_Display/venv/bin/python3 /home/pi/World_Cup_Display/new/slave/console.py
+Restart=always
+
+[Install]
+WantedBy=default.target
