@@ -25,29 +25,53 @@ valid_year_list = {
 
 
 class KeyboardListener:
-    def __init__(self, on_valid_year, on_update_display, on_stop_video):
+    def __init__(
+        self,
+        on_valid_year,
+        on_update_display,
+        on_stop_video,
+        on_volume_up=None,
+        on_volume_down=None,
+        on_volume_mute=None,
+    ):
         self.year = ""
         self.on_valid_year = on_valid_year
         self.on_update_display = on_update_display
         self.on_stop_video = on_stop_video
+        self.on_volume_up = on_volume_up
+        self.on_volume_down = on_volume_down
+        self.on_volume_mute = on_volume_mute
 
     def on_press(self, key):
         try:
             char = key.char
             if char in numbers_list:
                 self._add_number(char)
+
         except AttributeError:
-            # Special keys
+            # --- Special keys ---
             if key == keyboard.Key.backspace:
-                # If video is playing, stop it
                 if self.year == "":
                     self.on_stop_video()
                 else:
                     self.year = self.year[:-1]
                     self.on_update_display(self.year)
 
-            elif key == keyboard.Key.enter or key == keyboard.Key.keypad_enter:
+            elif key == keyboard.Key.enter:
                 self._check_year()
+
+            # --- Media keys ---
+            elif key == keyboard.Key.media_volume_up:
+                if self.on_volume_up:
+                    self.on_volume_up()
+
+            elif key == keyboard.Key.media_volume_down:
+                if self.on_volume_down:
+                    self.on_volume_down()
+
+            elif key == keyboard.Key.media_volume_mute:
+                if self.on_volume_mute:
+                    self.on_volume_mute()
 
     def _add_number(self, char):
         if len(self.year) < 4:
@@ -64,7 +88,5 @@ class KeyboardListener:
         self.on_update_display(self.year)
 
     def start(self):
-        with keyboard.Listener(
-            on_press=self.on_press
-        ) as listener:
+        with keyboard.Listener(on_press=self.on_press) as listener:
             listener.join()

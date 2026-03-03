@@ -3,7 +3,7 @@ from gui import VideoPlayer
 from keyboardListener import KeyboardListener
 from console import SlaveController
 from gpio import GPIOController
-import time
+import os
 
 # --- Init hardware ---
 slave = SlaveController()
@@ -45,11 +45,20 @@ def handle_update_display(text):
     player.update_year_display(text)
 
 
+# --- Callback to volume control ---
+def on_volume_up():
+    os.system("pactl set-sink-volume 0 +10%")
+
+def on_volume_down():
+    os.system("pactl set-sink-volume 0 -10%")
+
 # --- Start keyboard listener in background ---
 keyboard_listener = KeyboardListener(
     on_valid_year=handle_valid_year,
     on_update_display=handle_update_display,
-    on_stop_video=player.stop_video
+    on_stop_video=player.stop_video,
+    on_volume_up=on_volume_up,
+    on_volume_down=on_volume_down
 )
 
 kb_thread = threading.Thread(
