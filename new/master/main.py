@@ -10,8 +10,16 @@ import re
 slave = SlaveController()
 gpio = GPIOController()
 
+# ---------- Callback For Video Finish ----------
+# This is here because we need it in an init function
+
+def on_video_stop():
+    print("[DEBUG] Stopping video and resetting GPIO")
+    gpio.set_all_low()
+    slave.send("ALL_ON")
+
 # --- Init GUI ---
-player = VideoPlayer()
+player = VideoPlayer(on_video_finished=on_video_stop)
 
 # ---------- Volume helpers ----------
 
@@ -75,13 +83,6 @@ def handle_valid_year(year, video_name):
 
 def handle_update_display(text):
     player.update_year_display(text)
-
-
-def on_video_stop():
-    print("[DEBUG] Stopping video and resetting GPIO")
-    player.stop_video()
-    gpio.set_all_low()
-    slave.send("ALL_ON")
 
 # ---------- Keyboard listener ----------
 

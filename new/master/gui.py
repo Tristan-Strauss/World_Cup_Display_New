@@ -15,7 +15,8 @@ class VideoPlayer:
     END_YEAR = 2134
     STEP = 4
 
-    def __init__(self):
+    def __init__(self, on_video_finished=None):
+        self.on_video_finished = on_video_finished
         self.root = tk.Tk()
         self.root.attributes("-fullscreen", True)
         self.root.bind("<Escape>", lambda e: self._exit())
@@ -128,6 +129,10 @@ class VideoPlayer:
 
             self.video_frame.lower()
             self.show_year_display()
+
+            # Notify the main program that the playback has finished
+            if self.on_video_finished:
+                self.root.after(0, self.on_video_finished)
 
         threading.Thread(target=target, daemon=True).start()
 
