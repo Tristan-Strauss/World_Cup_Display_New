@@ -84,6 +84,20 @@ def handle_valid_year(year, video_name):
 def handle_update_display(text):
     player.update_year_display(text)
 
+
+def all_lights_off():
+    print("[DEBUG] ALL LIGHTS OFF command")
+    player.stop_video()
+    gpio.set_all_low()
+    slave.send("ALL_OFF")
+
+
+def all_lights_on():
+    print("[DEBUG] ALL LIGHTS ON command")
+    player.stop_video()
+    gpio.set_all_high()
+    slave.send("ALL_ON")
+
 # ---------- Keyboard listener ----------
 
 keyboard_listener = KeyboardListener(
@@ -91,7 +105,9 @@ keyboard_listener = KeyboardListener(
     on_update_display=handle_update_display,
     on_stop_video=on_video_stop,
     on_volume_up=on_volume_up,
-    on_volume_down=on_volume_down
+    on_volume_down=on_volume_down,
+    on_all_lights_off=all_lights_off,
+    on_all_lights_on=all_lights_on
 )
 
 kb_thread = threading.Thread(

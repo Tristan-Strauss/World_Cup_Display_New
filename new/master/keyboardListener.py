@@ -23,6 +23,8 @@ class KeyboardListener:
         on_volume_up=None,
         on_volume_down=None,
         on_volume_mute=None,
+        on_all_lights_off=None,
+        on_all_lights_on=None
     ):
         self.year = ""
         self.on_valid_year = on_valid_year
@@ -31,6 +33,8 @@ class KeyboardListener:
         self.on_volume_up = on_volume_up
         self.on_volume_down = on_volume_down
         self.on_volume_mute = on_volume_mute
+        self.on_all_lights_off = on_all_lights_off
+        self.on_all_lights_on = on_all_lights_on
 
     def on_press(self, key):
         try:
@@ -69,7 +73,17 @@ class KeyboardListener:
             self.on_update_display(self.year)
 
     def _check_year(self):
-        if len(self.year) == 4 and self.year in valid_year_list:
+        # Special Commands
+        
+        if self.year == "0":
+            if self.on_all_lights_off:
+                self.on_all_lights_off()
+
+        elif self.year == "1":
+            if self.on_all_lights_on:
+                self.on_all_lights_on()
+        # Normal year check
+        elif len(self.year) == 4 and self.year in valid_year_list:
             video = valid_year_list[self.year]
             self.on_valid_year(self.year, video)
 
