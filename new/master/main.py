@@ -98,6 +98,11 @@ def all_lights_on():
     gpio.set_all_high()
     slave.send("ALL_ON")
 
+
+def reboot_pi():
+    print("[DEBUG] Rebooting Pi...")
+    os.system("sudo reboot")
+
 # ---------- Keyboard listener ----------
 
 keyboard_listener = KeyboardListener(
@@ -107,7 +112,8 @@ keyboard_listener = KeyboardListener(
     on_volume_up=on_volume_up,
     on_volume_down=on_volume_down,
     on_all_lights_off=all_lights_off,
-    on_all_lights_on=all_lights_on
+    on_all_lights_on=all_lights_on,
+    on_reboot_pi=reboot_pi
 )
 
 kb_thread = threading.Thread(

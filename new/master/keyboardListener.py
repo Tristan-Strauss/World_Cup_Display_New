@@ -24,7 +24,8 @@ class KeyboardListener:
         on_volume_down=None,
         on_volume_mute=None,
         on_all_lights_off=None,
-        on_all_lights_on=None
+        on_all_lights_on=None,
+        on_reboot_pi=None
     ):
         self.year = ""
         self.on_valid_year = on_valid_year
@@ -35,7 +36,7 @@ class KeyboardListener:
         self.on_volume_mute = on_volume_mute
         self.on_all_lights_off = on_all_lights_off
         self.on_all_lights_on = on_all_lights_on
-
+        self.on_reboot_pi = on_reboot_pi
     def on_press(self, key):
         try:
             char = key.char
@@ -78,6 +79,10 @@ class KeyboardListener:
         if self.year == "0":
             if self.on_all_lights_off:
                 self.on_all_lights_off()
+        
+        elif self.year == "00":
+            if self.on_reboot_pi:
+                self.on_reboot_pi()
 
         elif self.year == "1":
             if self.on_all_lights_on:
