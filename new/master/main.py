@@ -15,6 +15,7 @@ gpio = GPIOController()
 
 def on_video_stop():
     print("[DEBUG] Stopping video and resetting GPIO")
+    player.stop_video()
     gpio.set_all_low()
     slave.send("ALL_ON")
 
