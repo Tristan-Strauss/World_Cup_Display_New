@@ -88,14 +88,14 @@ def handle_update_display(text):
 def all_lights_off():
     print("[DEBUG] ALL LIGHTS OFF command")
     player.stop_video()
-    gpio.set_all_low()
+    gpio.set_all_high()
     slave.send("ALL_OFF")
 
 
 def all_lights_on():
     print("[DEBUG] ALL LIGHTS ON command")
     player.stop_video()
-    gpio.set_all_high()
+    gpio.set_all_low()
     slave.send("ALL_ON")
 
 
